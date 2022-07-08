@@ -1,0 +1,82 @@
+--relaciones BD
+/*
+PADRE->ID, NOMBRE, APP, APM, TRABAJO
+HIJO-> ID, NOMBRE, APP, APM, HOBBIE, PADRE_ID
+*/
+
+CREATE TABLE PADRE18(
+    ID NUMBER PRIMARY KEY,
+    NOMBRE NVARCHAR2(100),
+    APP NVARCHAR2(100),
+    APM NVARCHAR2(100),
+    TRABAJO NVARCHAR2(100)
+);
+
+
+CREATE TABLE HIJO18(
+    ID NUMBER PRIMARY KEY,
+    NOMBRE NVARCHAR2(100),
+    APP NVARCHAR2(100),
+    APM NVARCHAR2(100),
+    HOBBIE NVARCHAR2(100),
+    PADRE_ID NUMBER,
+    --RELACIONES
+    --1RA FORMA
+    CONSTRAINT FK_PADRE FOREIGN KEY (PADRE_ID) REFERENCES PADRE18(ID)
+    --2DA FORMA
+    --FOREIGN KEY (PADRE_ID) REFERENCES PADRE18(ID_PADRE)
+);
+DROP TABLE HIJO18;
+
+INSERT INTO PADRE18 VALUES(1,'Goku','Son','Kakaroto', 'Luchador');
+INSERT INTO PADRE18 VALUES(2,'Homero','Simpson','Lopez', 'Obrero');
+INSERT INTO PADRE18 VALUES(3,'Naruto','Usumaki','Deberas', 'Ninja');
+INSERT INTO PADRE18 VALUES(4,'Don','Ramon','Monchito', 'Churrero');
+
+SELECT * FROM PADRE18;
+
+--HIJOS
+INSERT INTO HIJO18 VALUES(1,'Gohan','Son','Occsatan', 'Estudiar', 1);
+INSERT INTO HIJO18 VALUES(2,'Goten','Son','Occsatan', 'Estudiar', 1);
+INSERT INTO HIJO18 VALUES(3,'Bartolomeo','Simpson','March', 'Patineta', 2);
+INSERT INTO HIJO18 VALUES(4,'Lisa','Simpson','March', 'Saxsofon', 2);
+INSERT INTO HIJO18 VALUES(5,'Magi','Simpson','March', 'Patineta',2);
+INSERT INTO HIJO18 VALUES(6,'Boruto','Usumaki','Hiuga', 'Entrenar',3);
+INSERT INTO HIJO18 VALUES(7,'Himawari','Usumaki','Hiuga', 'Entrenar',3);
+INSERT INTO HIJO18 VALUES(8,'Chavo','Del','Ocho', 'Comer',null);
+
+SELECT * FROM HIJO18;
+
+-- EJEMPLOS CON INNER JOIN
+-- mostrar los hijos y el nombre del padre
+SELECT * 
+FROM HIJO18
+INNER JOIN PADRE18
+ON HIJO18.PADRE_ID = PADRE18.ID
+ORDER BY HIJO18.ID;
+
+
+
+-- mostrar los hijos y el nombre del padre CON ALIAS EN EL SQL
+SELECT H.*, P.*
+FROM HIJO18 H
+INNER JOIN PADRE18 P
+ON H.PADRE_ID = P.ID
+ORDER BY H.ID;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
